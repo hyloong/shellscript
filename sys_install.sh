@@ -1,12 +1,16 @@
 ##
-echo "xxxxxx" |passwd root --stdin
+PWD=xxxxxx
+NAME=xxxxx
+MAIL=xxxxx
+
+echo $PWD |passwd root --stdin
 
 # change dns
 START_DATETIME=`date +"%Y-%m-%d %H:%M:%S"`
 echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 
 #rsync source
-echo "xxxxxx" > /etc/rsync.pass
+echo $PWD > /etc/rsync.pass
 chmod 600 /etc/rsync.pass
 
 ## sys update
@@ -32,6 +36,12 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias ll='ls -lh'
 
+alias gad='git add .'
+alias gci='git commit -m '
+alias gft='git fetch'
+alias gpom='git push -u origin master'
+
+
 if [ -f /etc/bashrc ]; then
         . /etc/bashrc
 fi
@@ -51,7 +61,27 @@ ARC=false
 EOF
 
 
+## git设置
+git config --global user.name $NAME
+git config --global user.email $MAIL
+
 
 # install emacs
-yum install gtk2 gtk2-devel gtk2-devel-docs
+function emace_install(){
+	yum install gtk2 gtk2-devel gtk2-devel-docs
+    yum install libXpm libXpm-devel \
+                libjpeg libjpeg-devel \
+                libgif libgif-devel \
+                libungif libungif-devel \
+                libtiff libtiff-devel
+
+    cd /root/download
+    wget http://mirrors.ustc.edu.cn/gnu/emacs/emacs-25.2.tar.gz
+    tar -zxvf emacs-25.2.tar.gz
+    cd emacs-25.2
+    ./configure
+    make
+    make install
+}
+
 
