@@ -13,4 +13,3 @@ f test "x$no_recursion" != "xyes" -a "x$OVERRIDE_CONFIG_CACHE" = "x"; then
 fi
 
 find $path -name "*.cfg" |grep -vE "config_(appstore921|gjxxyyb|qihoo|suyou_debug).cfg" |grep -vE "config_(manling.*|ml.*)" |xargs sed -i "s#.*ResUrl.*cdn.*#${cdn}#g"
-
