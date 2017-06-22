@@ -68,12 +68,7 @@ function install()
          sleep 5
          interface=`/sbin/ifconfig |grep ppp[0-9]|awk '{print $1}'`
         if [ -n "$interface" ];then
-                route add -net 139.162.0.0/16 dev $interface
-                route add -net 52.74.0.0/16 dev $interface
-                route add -net 45.79.0.0/16 dev $interface
-                route add -net 103.56.159.0/24 dev $interface
-                route add -net 123.31.11.0/24 dev $interface
-                route add -net 45.33.31.0/24 dev $interface
+                route add -net xxx.xxx.xx.xxx dev $interface
                 logfun "启动成功，添加路由成功"
         else
                 logfun "添加路由失败，ppp接口没启动"
@@ -100,11 +95,7 @@ function startvpn()
                 sleep 15
                 interface=`/sbin/ifconfig |grep ppp[0-9]|awk '{print $1}'`
                 if [ -n "$interface" ];then
-                        route add -net 139.162.0.0/16 dev $interface
-                        route add -net 52.74.0.0/16 dev $interface
-                        route add -net 45.79.0.0/16 dev $interface
-                        route add -net 103.56.159.0/24 dev $interface
-                        route add -net 123.31.11.0/24 dev $interface
+                        route add -net xxx.xxx.xx.xxx dev $interface
                         logfun "启动成功，添加路由成功"
                         echo "启动成功，添加路由成功"
                         break
