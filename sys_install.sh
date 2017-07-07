@@ -66,14 +66,27 @@ git config --global user.name $NAME
 git config --global user.email $MAIL
 
 
+function svn_install(){
+    yum remove subversion
+    cat > /etc/yum.repos.d/wandisco-svn.repo <<EOF
+[WandiscoSVN]
+name=Wandisco SVN Repo
+baseurl=http://opensource.wandisco.com/centos/6/svn-1.8/RPMS/$basearch/
+enabled=1
+gpgcheck=0
+EOF
+    yum clean all
+    yum install subversion
+}
+
 # install emacs
 function emace_install(){
 	yum install gtk2 gtk2-devel gtk2-devel-docs
     yum install libXpm libXpm-devel \
-                libjpeg libjpeg-devel \
-                libgif libgif-devel \
-                libungif libungif-devel \
-                libtiff libtiff-devel
+        libjpeg libjpeg-devel \
+        libgif libgif-devel \
+        libungif libungif-devel \
+        libtiff libtiff-devel
 
     cd /root/download
     wget http://mirrors.ustc.edu.cn/gnu/emacs/emacs-25.2.tar.gz
@@ -84,6 +97,27 @@ function emace_install(){
     make install
 }
 
+
+function global_install(){
+    yum install ctags
+    cd /root/download
+    wget http://tamacom.com/global/global-6.5.7.tar.gz
+    tar -zxvf global-6.5.7.tar.gz
+    cd global-6.5.7
+    ./configure --with-exuberant-ctags=/usr/bin/ctags
+    make
+    make install
+    cp gtags.conf ~/.globalrc
+}
+
+function jdk_install(){
+    # tar -zxvf jdk-8u101-linux-x64.tar.gz
+    # cd /etc/
+    # export JAVA_HOME=/path/to/jdk1.8.0_101
+    # export PATH=$JAVA_HOME/bin:$PATH
+    # export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+    # source /etc/profile
+}
 
 function elrang_install(){
     cd /root/download
@@ -97,7 +131,7 @@ function elrang_install(){
     # tar -xvf wxWidgets-3.0.0.tar.bz2
     # cd wxWidgets-3.0.0
     # ./configure --with-cocoa --prefix=/usr/local
-    # ./configure --with-cocoa --prefix=/usr/local --with-macosx-version-min=10.9 --disable-shared
+    # ./configure --with-cocoa --prefix=/usr/local --with-macosx-version-min=10.9 --disable-shared --enable-unicode --enable-debug
     # make
     # make install
     # export PATH=/usr/local/bin:$PATH
@@ -135,6 +169,10 @@ function elrang_install(){
     # other debug type
     # `$TYPE` is `opt`, `gcov`, `gprof`, `debug`, `valgrind`, or `lcnt` 
     # make $TYPE FLAVOR=$FLAVOR
+}
+
+function mysql_install(){
+    
 
 }
 
